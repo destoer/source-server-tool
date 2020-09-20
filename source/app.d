@@ -19,7 +19,7 @@ int main(string[] args)
 
 	if(!success)
 	{
-		writefln("failed to connect to: %s:%s",args[0],args[2]);
+		writefln("failed to connect to: %s:%s",args[1],args[2]);
 		return 0;
 	}
 	

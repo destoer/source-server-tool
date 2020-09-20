@@ -162,8 +162,6 @@ class RconClient {
 		auto buf = new byte[MAX_SIZE];
 
 		while(true) {
-			// how to read a specific ammount of the socket?
-			// we only want each part off the damb thing
 			readPacket(buf);
 
 			const auto respPacket = RconPacket(buf);
