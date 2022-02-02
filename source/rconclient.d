@@ -22,7 +22,9 @@ class RconClient {
 	const int SERVERDATA_EXECCOMMAND = 2;
 	const int SERVERDATA_RESPONSE_VALUE = 0;
 
-	const int MAX_SIZE = 0x1008;
+	const int MAX_SIZE = 0x1010;
+
+	bool authed = false;
 
 	struct RconPacket {
 		this(byte[] buf) {
@@ -108,7 +110,9 @@ class RconClient {
 
 		auto reply = new RconPacket(buf);
 
-		return reply.id != -1;
+		authed = reply.id != -1;
+
+		return authed;
 	}
 
 	void readPacket(byte[] buf) {

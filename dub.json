@@ -5,5 +5,9 @@
 	"copyright": "Copyright © 2020, destoer",
 	"description": "tools for source engine servers ",
 	"license": "MIT",
-	"name": "source-server-tool"
+	"name": "source-server-tool",
+
+    "dependencies": {
+        "dlangui": "~master"
+    }
 }
