@@ -20,20 +20,32 @@ void execute_command(dstring command, Widget terminal) {
 }
 
 void auth(string ip, string port, string pass, Widget terminal) {
-	auto success = rcon_client.connect(ip,port);
 
-	if(!success)
+	try 
 	{
-		terminal.text = to!dstring(format("failed to connect to: %s:%s",ip,port));
-		return;
+
+		auto success = rcon_client.connect(ip,port);
+
+		if(!success)
+		{
+			terminal.text = to!dstring(format("failed to connect to: %s:%s",ip,port));
+			return;
+		}
+
+		success = rcon_client.auth(pass);
+
+		if(!success)
+		{
+			terminal.text = to!dstring(format("failed to auth to: %s:%s:%s",ip,port,pass));
+		}	
+
 	}
 
-	success = rcon_client.auth(pass);
-
-	if(!success)
+	catch(Throwable)
 	{
-		terminal.text = to!dstring(format("failed to auth to: %s:%s:%s",ip,port,pass));
-	}	
+		terminal.text = "error connecting";
+		return;
+	}
 
 	terminal.text = "authenticated";
 }
@@ -95,7 +107,7 @@ Widget setup_window() {
 	command_input.keyEvent = delegate(Widget widget, KeyEvent event) {
 
 		// perform command on enter
-		if(event.keyCode == KeyCode.RETURN)
+		if(event.keyCode == KeyCode.RETURN && event.action == KeyAction.KeyDown)
 		{
 			execute_command(command_input.text,terminal);
 			command_input.text = "";			
